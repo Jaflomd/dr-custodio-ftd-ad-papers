@@ -299,6 +299,91 @@ h2 {
 .accent-orange { color: var(--orange) !important; }
 .accent-purple { color: var(--purple) !important; }
 .accent-red { color: var(--red) !important; }
+.impact {
+  border: 1px solid var(--teal-border);
+  background: var(--teal-soft);
+  border-radius: var(--r-md);
+  padding: 11px 14px;
+}
+.impact h3 {
+  margin: 0 0 5px;
+  color: var(--teal);
+  font-size: 10.5px;
+  letter-spacing: .09em;
+  text-transform: uppercase;
+  font-weight: 900;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.impact h3::before {
+  content: "";
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--teal);
+}
+.impact p {
+  margin: 0;
+  color: var(--text);
+  font-size: 13.5px;
+  line-height: 1.5;
+}
+/* Panorama */
+#panorama.window.active { display: block; }
+.pano { padding: 28px 26px 30px; max-width: 1000px; }
+.pano-lede {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(21px, 2.5vw, 30px);
+  line-height: 1.18;
+  letter-spacing: -.01em;
+  margin: 2px 0 6px;
+}
+.pano-lede b { color: var(--azul); font-family: var(--font-body); font-weight: 800; }
+.pano-sub { color: var(--text-muted); font-size: 14px; line-height: 1.55; max-width: 760px; margin: 0 0 8px; }
+.pano-h {
+  font-size: 11px; letter-spacing: .1em; text-transform: uppercase;
+  font-weight: 900; color: var(--azul); margin: 26px 0 12px;
+}
+.cmp-wrap { overflow-x: auto; border: 1px solid var(--border); border-radius: var(--r-md); }
+.cmp { width: 100%; border-collapse: collapse; font-size: 13.5px; min-width: 560px; }
+.cmp th, .cmp td { padding: 11px 14px; text-align: left; vertical-align: top; border-bottom: 1px solid var(--border); }
+.cmp thead th { background: var(--surface); font-size: 10.5px; text-transform: uppercase; letter-spacing: .06em; color: var(--text-muted); font-weight: 900; }
+.cmp td:first-child, .cmp th:first-child { color: var(--text-muted); font-weight: 700; width: 220px; }
+.cmp tbody tr:last-child td { border-bottom: 0; }
+.cmp .dft { color: var(--purple); font-weight: 700; }
+.cmp .ea { color: var(--azul); font-weight: 700; }
+.map { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px,1fr)); gap: 10px; }
+.map-card {
+  border: 1px solid var(--border); border-radius: var(--r-md);
+  background: #fff; padding: 13px 14px; display: flex; flex-direction: column; gap: 7px;
+}
+.map-card .mc-top { display: flex; align-items: center; gap: 8px; }
+.map-card h4 { margin: 0; font-size: 13.5px; font-weight: 800; line-height: 1.25; }
+.map-card p { margin: 0; font-size: 12px; color: var(--text-muted); line-height: 1.42; }
+.tag { border-radius: var(--r-pill); padding: 3px 8px 4px; font-size: 9px; font-weight: 900; letter-spacing: .06em; text-transform: uppercase; white-space: nowrap; }
+.tag-pedido { background: var(--azul-grad); color:#fff; }
+.tag-prop { color: var(--teal); background: var(--teal-soft); border: 1px solid var(--teal-border); }
+/* Galería de tarjetas */
+.gallery { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px,1fr)); gap: 12px; }
+.gcard {
+  border: 1px solid var(--border); border-radius: var(--r-md); background: #fff;
+  overflow: hidden; cursor: pointer; display: flex; flex-direction: column;
+  transition: transform .15s ease, box-shadow .15s ease, border-color .15s ease;
+}
+.gcard:hover { transform: translateY(-3px); box-shadow: var(--shadow-md); border-color: var(--azul-border); }
+.gcard .thumb {
+  height: 152px; background: var(--surface-raised); border-bottom: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: center; overflow: hidden;
+}
+.gcard .thumb img { width: 100%; height: 100%; object-fit: contain; padding: 9px; }
+.gcard .gbody { padding: 13px 14px 15px; display: flex; flex-direction: column; gap: 7px; flex: 1; }
+.gcard .mc-top { display: flex; align-items: center; gap: 8px; }
+.gcard h4 { margin: 0; font-size: 14px; font-weight: 800; line-height: 1.22; }
+.gcard .metric-line { font-size: 12px; color: var(--azul); font-weight: 800; }
+.gcard p { margin: 0; font-size: 12px; color: var(--text-muted); line-height: 1.42; }
+.gcard .open { margin-top: auto; padding-top: 4px; font-size: 10px; font-weight: 900; letter-spacing: .06em; text-transform: uppercase; color: var(--teal); }
+.pano-hint { font-size: 12px; color: var(--text-subtle); margin: -4px 0 12px; }
 @media (max-width: 920px) {
   .topbar { align-items: flex-start; flex-direction: column; }
   nav { justify-content: flex-start; }
@@ -312,6 +397,7 @@ h2 {
   header { position: static; }
   .tab { display: none; }
   .window { display: grid !important; grid-template-columns: 1fr 1fr; break-after: page; min-height: auto; }
+  #panorama.window { display: block !important; }
 }
 </style>
 </head>
@@ -323,7 +409,8 @@ h2 {
       <h1>EA vs DFT: una base, cinco papers</h1>
     </div>
     <nav aria-label="Ventanas">
-      <button class="tab active" data-target="paper1">1 · Paper pedido</button>
+      <button class="tab active" data-target="panorama">Panorama</button>
+      <button class="tab" data-target="paper1">1 · Paper pedido</button>
       <button class="tab" data-target="paper2">2 · Perfiles</button>
       <button class="tab" data-target="paper3">3 · Triaje ML</button>
       <button class="tab" data-target="paper4">4 · NPI-Q</button>
@@ -340,7 +427,88 @@ h2 {
     <span class="pill">NPI-Q + funcionalidad + afecto</span>
   </div>
 
-  <section id="paper1" class="window active">
+  <section id="panorama" class="window active">
+    <div class="pano">
+      <div class="meta-row" style="margin-bottom:10px">
+        <span class="status">Para el Dr. Custodio</span>
+      </div>
+      <p class="pano-lede">Una sola base de clínica de memoria peruana —<b> N=609 </b>(EA=466, DFT=143)— sostiene cinco análisis. Usted pidió el primero; los otros cuatro <b>ya están corridos</b> sobre el mismo dataset.</p>
+      <p class="pano-sub">La lectura corta: DFT se reconoce por el <b>perfil conductual</b> (apatía, trastorno motor, desinhibición), no por la carga funcional. Cada pestaña abre el paper con sus métricas, hallazgo, impacto clínico y figura.</p>
+
+      <div class="pano-h">EA vs DFT de un vistazo · Paper 1</div>
+      <div class="cmp-wrap">
+        <table class="cmp">
+          <thead>
+            <tr><th>Dimensión</th><th class="dft">DFT</th><th class="ea">EA</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Edad de inicio</td><td>Más temprana</td><td>Más tardía</td></tr>
+            <tr><td>Carga NPI-Q total</td><td>Mayor</td><td>Menor</td></tr>
+            <tr><td>Apatía · motor · irritabilidad · sueño · apetito · desinhibición</td><td>Más prevalentes</td><td>Menos prevalentes</td></tr>
+            <tr><td>Funcionalidad basal (PFAQ)</td><td>Relativamente preservada</td><td>Más deteriorada</td></tr>
+            <tr><td>Señales más útiles a la cabecera</td><td>Trastorno motor (OR 1.88) · apatía severa (OR 1.35/punto)</td><td>Mayor discapacidad funcional</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="pano-h">Los cinco papers</div>
+      <p class="pano-hint">Click en cualquier tarjeta para abrir el paper completo.</p>
+      <div class="gallery">
+        <div class="gcard" data-target="paper1" role="button" tabindex="0">
+          <div class="thumb"><img src="assets/paper1_npi_prevalence.png" alt="Prevalencia NPI-Q DFT vs EA"></div>
+          <div class="gbody">
+            <div class="mc-top"><span class="number">1</span><span class="tag tag-pedido">pedido</span></div>
+            <h4>Firma clínica DFT vs EA</h4>
+            <div class="metric-line">AUC 0.782</div>
+            <p>Motor y apatía inclinan a DFT; peor funcionalidad basal apoya EA.</p>
+            <div class="open">Ver paper →</div>
+          </div>
+        </div>
+        <div class="gcard" data-target="paper2" role="button" tabindex="0">
+          <div class="thumb"><img src="assets/paper2_lca_profiles.png" alt="Perfiles latentes NPI-Q"></div>
+          <div class="gbody">
+            <div class="mc-top"><span class="number">2</span><span class="tag tag-prop">propuesta</span></div>
+            <h4>Perfiles latentes</h4>
+            <div class="metric-line">3 clases · entropía 0.785</div>
+            <p>La conducta es dimensional, no patognomónica: perfiles que cruzan el diagnóstico.</p>
+            <div class="open">Ver paper →</div>
+          </div>
+        </div>
+        <div class="gcard" data-target="paper3" role="button" tabindex="0">
+          <div class="thumb"><img src="assets/paper3_ml_roc.png" alt="Curvas ROC triaje DFT vs EA"></div>
+          <div class="gbody">
+            <div class="mc-top"><span class="number">3</span><span class="tag tag-prop">propuesta</span></div>
+            <h4>Triaje ML breve</h4>
+            <div class="metric-line">Brief AUC 0.760</div>
+            <p>Variables rutinarias pre-señalan sospecha de DFT. Apoyo de triaje, no diagnóstico.</p>
+            <div class="open">Ver paper →</div>
+          </div>
+        </div>
+        <div class="gcard" data-target="paper4" role="button" tabindex="0">
+          <div class="thumb"><img src="assets/paper4_ega_network.png" alt="Red EGA del NPI-Q"></div>
+          <div class="gbody">
+            <div class="mc-top"><span class="number">4</span><span class="tag tag-prop">propuesta</span></div>
+            <h4>Estructura del NPI-Q</h4>
+            <div class="metric-line">CFI 0.976</div>
+            <p>3 dimensiones estables en vez de 12 ítems sueltos; lenguaje compartido EA/DFT.</p>
+            <div class="open">Ver paper →</div>
+          </div>
+        </div>
+        <div class="gcard" data-target="paper5" role="button" tabindex="0">
+          <div class="thumb"><img src="assets/paper5_bridge.png" alt="Síntomas puente red EGA"></div>
+          <div class="gbody">
+            <div class="mc-top"><span class="number">5</span><span class="tag tag-prop">propuesta</span></div>
+            <h4>Red de síntomas</h4>
+            <div class="metric-line">Bridge 0.758</div>
+            <p>Alucinaciones y motor como síntomas puente. Estructura de red compartida EA/DFT.</p>
+            <div class="open">Ver paper →</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="paper1" class="window">
     <div class="copy">
       <div class="meta-row">
         <span class="number">1</span>
@@ -354,6 +522,10 @@ h2 {
         <div class="metric"><b>1.35</b><span>OR por punto de apatía en el modelo de severidad NPI-Q</span></div>
       </div>
       <div class="finding">DFT mostró inicio más temprano, mayor carga NPI-Q total y más apatía, trastorno motor, irritabilidad, sueño, apetito y desinhibición; funcionalidad basal fue peor en EA, lo que separa carga funcional de perfil conductual.</div>
+      <div class="impact">
+        <h3>Impacto clínico</h3>
+        <p>Para el diferencial a la cabecera, el trastorno motor y la severidad de apatía son las señales NPI-Q que más inclinan hacia DFT; una funcionalidad basal más deteriorada apoya EA. Reordena el razonamiento desde la carga funcional hacia el perfil conductual.</p>
+      </div>
       <div class="brief-block">
         <div class="mini-card">
           <h3>N y muestra</h3>
@@ -397,6 +569,10 @@ h2 {
         <div class="metric"><b>589</b><span>casos completos para indicadores NPI-Q</span></div>
       </div>
       <div class="finding">La solución separó tres perfiles: bajo síntoma, afectivo-irritable y alta carga global; las clases se asociaron con diagnóstico, CDR, PFAQ, NPI total, cognición y afecto.</div>
+      <div class="impact">
+        <h3>Impacto clínico</h3>
+        <p>La carga conductual es dimensional, no patognomónica: un paciente con NPI alto no es automáticamente DFT. Útil para calibrar expectativas y orientar el manejo por perfil de síntomas más allá de la etiqueta diagnóstica.</p>
+      </div>
       <div class="brief-block">
         <div class="mini-card">
           <h3>N y muestra</h3>
@@ -440,6 +616,10 @@ h2 {
         <div class="metric"><b>0.820</b><span>AUC con missing flags; sensibilidad, no modelo principal</span></div>
       </div>
       <div class="finding">El modelo Core logró discriminación moderada con imputación dentro de validación cruzada; el modelo Brief tuvo rendimiento cercano y mejor potencial clínico por simplicidad.</div>
+      <div class="impact">
+        <h3>Impacto clínico</h3>
+        <p>Un puñado de variables rutinarias podría pre-señalar sospecha de DFT antes del estudio especializado: un apoyo de triaje para clínicas de memoria con acceso limitado, nunca un reemplazo del diagnóstico clínico.</p>
+      </div>
       <div class="brief-block">
         <div class="mini-card">
           <h3>N y muestra</h3>
@@ -483,6 +663,10 @@ h2 {
         <div class="metric"><b>0.046</b><span>RMSEA del modelo EGA global</span></div>
       </div>
       <div class="finding">La estructura global de tres comunidades mostró buen ajuste CFA, invariancia diagnóstica aceptable y validación externa con PFAQ, CDR y cognición.</div>
+      <div class="impact">
+        <h3>Impacto clínico</h3>
+        <p>El NPI-Q se lee mejor como tres dimensiones estables que como 12 ítems sueltos, y esa estructura se sostiene en EA y DFT. Da un lenguaje compartido y más limpio para resumir conducta en historia clínica y seguimiento.</p>
+      </div>
       <div class="brief-block">
         <div class="mini-card">
           <h3>N y muestra</h3>
@@ -526,6 +710,10 @@ h2 {
         <div class="metric"><b>0.746</b><span>bridge expected influence de trastorno motor</span></div>
       </div>
       <div class="finding">Alucinaciones, trastorno motor, agitación, PFAQ, apatía y ansiedad NPI-Q emergieron como conectores entre comunidades clínicas; no hubo diferencias globales significativas de red entre EA y DFT.</div>
+      <div class="impact">
+        <h3>Impacto clínico</h3>
+        <p>Alucinaciones y trastorno motor funcionan como síntomas puente: vigilarlos o tratarlos podría tener efecto desproporcionado sobre toda la red sintomática. La estructura de red es compartida entre EA y DFT, así que la lógica de intervención se transfiere.</p>
+      </div>
       <div class="brief-block">
         <div class="mini-card">
           <h3>N y muestra</h3>
@@ -559,13 +747,16 @@ h2 {
 <script>
 const tabs = document.querySelectorAll(".tab");
 const panels = document.querySelectorAll(".window");
-tabs.forEach((tab) => {
-  tab.addEventListener("click", () => {
-    tabs.forEach((t) => t.classList.remove("active"));
-    panels.forEach((p) => p.classList.remove("active"));
-    tab.classList.add("active");
-    document.getElementById(tab.dataset.target).classList.add("active");
-    window.scrollTo({ top: 0, behavior: "smooth" });
+function activate(target) {
+  if (!document.getElementById(target)) return;
+  tabs.forEach((t) => t.classList.toggle("active", t.dataset.target === target));
+  panels.forEach((p) => p.classList.toggle("active", p.id === target));
+  window.scrollTo({ top: 0, behavior: "smooth" });
+}
+document.querySelectorAll("[data-target]").forEach((el) => {
+  el.addEventListener("click", () => activate(el.dataset.target));
+  el.addEventListener("keydown", (e) => {
+    if (e.key === "Enter" || e.key === " ") { e.preventDefault(); activate(el.dataset.target); }
   });
 });
 </script>
