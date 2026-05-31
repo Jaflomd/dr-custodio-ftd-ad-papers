@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EA vs DFT · 5 papers para revision rapida</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:opsz,wght@9..40,300..800&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #ffffff;
+  --bg-alt: #fafaf9;
+  --surface: #f4f4f2;
+  --surface-raised: #f8f8f6;
+  --azul: #1e3a8a;
+  --azul-deep: #162d72;
+  --azul-mid: #3b5fcc;
+  --azul-soft: rgba(30,58,138,0.055);
+  --azul-border: rgba(30,58,138,0.16);
+  --azul-grad: linear-gradient(135deg, #1e3a8a 0%, #1e4da8 60%, #2563c4 100%);
+  --teal: #0e8fa0;
+  --teal-soft: rgba(14,143,160,0.07);
+  --teal-border: rgba(14,143,160,0.24);
+  --text: #18160f;
+  --text-muted: #6b6760;
+  --text-subtle: #9b9590;
+  --border: #e8e6e3;
+  --border-strong: #d2ceca;
+  --red: #c1121f;
+  --orange: #d76a03;
+  --green: #188a3b;
+  --purple: #6d28d9;
+  --gold: #b8891e;
+  --shadow: 0 1px 3px rgba(24,22,15,0.06), 0 1px 2px rgba(24,22,15,0.04);
+  --shadow-md: 0 4px 8px rgba(24,22,15,0.07), 0 1px 3px rgba(24,22,15,0.05);
+  --r-md: 8px;
+  --r-pill: 999px;
+  --font-display: "Instrument Serif", Georgia, serif;
+  --font-body: "DM Sans", -apple-system, BlinkMacSystemFont, sans-serif;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  margin: 0;
+  background: linear-gradient(180deg, var(--bg) 0%, var(--bg-alt) 100%);
+  color: var(--text);
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+}
+header {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background: rgba(255,255,255,0.92);
+  border-bottom: 1px solid var(--border);
+  backdrop-filter: blur(12px) saturate(1.2);
+}
+.topbar {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 14px 24px 12px;
+  display: flex;
+  gap: 18px;
+  align-items: center;
+  justify-content: space-between;
+}
+.brand {
+  min-width: 260px;
+}
+.brand .kicker {
+  color: var(--azul);
+  font-size: 10px;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  font-weight: 800;
+}
+.brand h1 {
+  margin: 2px 0 0;
+  font-family: var(--font-display);
+  font-size: clamp(25px, 3vw, 36px);
+  line-height: .98;
+  font-weight: 400;
+  letter-spacing: -.01em;
+}
+nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  justify-content: flex-end;
+}
+.tab {
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text-muted);
+  border-radius: var(--r-pill);
+  padding: 7px 12px 8px;
+  font: 800 10.5px/1 var(--font-body);
+  letter-spacing: .045em;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+.tab.active {
+  background: var(--azul-grad);
+  border-color: transparent;
+  color: white;
+  box-shadow: var(--shadow-md);
+}
+main {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 22px 24px 38px;
+}
+.deck-note {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+.pill {
+  border: 1px solid var(--azul-border);
+  background: var(--azul-soft);
+  color: var(--azul-deep);
+  border-radius: var(--r-pill);
+  padding: 5px 10px 6px;
+  font-size: 11px;
+  font-weight: 800;
+}
+.window {
+  display: none;
+  min-height: calc(100vh - 128px);
+  border: 1px solid var(--border);
+  border-radius: var(--r-md);
+  background: linear-gradient(145deg, #ffffff, #fbfbfa);
+  box-shadow: var(--shadow);
+  overflow: hidden;
+}
+.window.active {
+  display: grid;
+  grid-template-columns: minmax(0, 1.02fr) minmax(360px, .98fr);
+}
+.copy {
+  padding: 26px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.visual {
+  border-left: 1px solid var(--border);
+  background: var(--surface-raised);
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+.visual img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  min-height: 440px;
+  object-fit: contain;
+  padding: 18px;
+}
+.visual figcaption {
+  border-top: 1px solid var(--border);
+  color: var(--text-muted);
+  font-size: 11px;
+  line-height: 1.4;
+  padding: 9px 13px 11px;
+  background: #fff;
+}
+.meta-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.number {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: var(--azul-grad);
+  color: #fff;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 900;
+  font-size: 13px;
+}
+.status {
+  color: var(--teal);
+  background: var(--teal-soft);
+  border: 1px solid var(--teal-border);
+  border-radius: var(--r-pill);
+  padding: 4px 9px 5px;
+  font-size: 10px;
+  font-weight: 900;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+}
+h2 {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(31px, 4vw, 50px);
+  line-height: .96;
+  letter-spacing: -.015em;
+  color: var(--text);
+}
+.question {
+  max-width: 760px;
+  color: var(--text-muted);
+  font-size: 15px;
+  line-height: 1.5;
+}
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+}
+.metric {
+  border: 1px solid var(--border);
+  background: #fff;
+  border-radius: var(--r-md);
+  padding: 10px 12px;
+  min-height: 72px;
+}
+.metric b {
+  display: block;
+  color: var(--azul);
+  font-size: 21px;
+  line-height: 1;
+  margin-bottom: 5px;
+}
+.metric span {
+  color: var(--text-muted);
+  font-size: 11.5px;
+  line-height: 1.3;
+}
+.finding {
+  border-left: 3px solid var(--gold);
+  background: linear-gradient(90deg, rgba(184,137,30,.08), rgba(184,137,30,0));
+  padding: 10px 13px;
+  color: var(--text);
+  font-size: 14.5px;
+  line-height: 1.48;
+}
+.brief-block {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+}
+.mini-card {
+  border: 1px solid var(--border);
+  background: #fff;
+  border-radius: var(--r-md);
+  padding: 12px 13px;
+}
+.mini-card h3 {
+  margin: 0 0 8px;
+  color: var(--azul);
+  font-size: 10.5px;
+  letter-spacing: .09em;
+  text-transform: uppercase;
+}
+.mini-card ul {
+  margin: 0;
+  padding-left: 17px;
+}
+.mini-card li {
+  color: var(--text-muted);
+  font-size: 12.5px;
+  line-height: 1.42;
+  margin: 0 0 5px;
+}
+.mini-card li:last-child {
+  margin-bottom: 0;
+}
+.discussion {
+  margin-top: auto;
+  border: 1px solid var(--border);
+  background: var(--bg-alt);
+  border-radius: var(--r-md);
+  padding: 14px 15px;
+}
+.discussion h3 {
+  margin: 0 0 8px;
+  color: var(--azul);
+  font-size: 11px;
+  letter-spacing: .09em;
+  text-transform: uppercase;
+}
+.discussion p {
+  margin: 0;
+  color: var(--text);
+  font-size: 13.5px;
+  line-height: 1.58;
+}
+.accent-green { color: var(--green) !important; }
+.accent-orange { color: var(--orange) !important; }
+.accent-purple { color: var(--purple) !important; }
+.accent-red { color: var(--red) !important; }
+@media (max-width: 920px) {
+  .topbar { align-items: flex-start; flex-direction: column; }
+  nav { justify-content: flex-start; }
+  .window.active { grid-template-columns: 1fr; }
+  .visual { border-left: 0; border-top: 1px solid var(--border); }
+  .visual img { min-height: 300px; }
+  .grid { grid-template-columns: 1fr; }
+  .brief-block { grid-template-columns: 1fr; }
+}
+@media print {
+  header { position: static; }
+  .tab { display: none; }
+  .window { display: grid !important; grid-template-columns: 1fr 1fr; break-after: page; min-height: auto; }
+}
+</style>
+</head>
+<body>
+<header>
+  <div class="topbar">
+    <div class="brand">
+      <div class="kicker">Dr. Custodio · revisión rápida</div>
+      <h1>EA vs DFT: una base, cinco papers</h1>
+    </div>
+    <nav aria-label="Ventanas">
+      <button class="tab active" data-target="paper1">1 · Paper pedido</button>
+      <button class="tab" data-target="paper2">2 · Perfiles</button>
+      <button class="tab" data-target="paper3">3 · Triaje ML</button>
+      <button class="tab" data-target="paper4">4 · NPI-Q</button>
+      <button class="tab" data-target="paper5">5 · Network</button>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <div class="deck-note">
+    <span class="pill">Base: N=609</span>
+    <span class="pill">EA=466</span>
+    <span class="pill">DFT=143</span>
+    <span class="pill">NPI-Q + funcionalidad + afecto</span>
+  </div>
+
+  <section id="paper1" class="window active">
+    <div class="copy">
+      <div class="meta-row">
+        <span class="number">1</span>
+        <span class="status">paper solicitado</span>
+      </div>
+      <h2>Firma neuropsiquiátrica y funcional para diferenciar DFT de EA</h2>
+      <p class="question">Pregunta central: qué síntomas NPI-Q y variables clínicas de cabecera diferencian mejor DFT de EA en una cohorte peruana de clínica de memoria.</p>
+      <div class="grid">
+        <div class="metric"><b>0.782</b><span>AUC aparente del modelo logístico ajustado core</span></div>
+        <div class="metric"><b>1.88</b><span>OR ajustado de trastorno motor para DFT en el modelo de presencia</span></div>
+        <div class="metric"><b>1.35</b><span>OR por punto de apatía en el modelo de severidad NPI-Q</span></div>
+      </div>
+      <div class="finding">DFT mostró inicio más temprano, mayor carga NPI-Q total y más apatía, trastorno motor, irritabilidad, sueño, apetito y desinhibición; funcionalidad basal fue peor en EA, lo que separa carga funcional de perfil conductual.</div>
+      <div class="brief-block">
+        <div class="mini-card">
+          <h3>N y muestra</h3>
+          <ul>
+            <li>N total: 609 pacientes; EA=466 y DFT=143.</li>
+            <li>Modelo ajustado core: n=551 con variables demográficas, funcionales y NPI-Q.</li>
+            <li>Dominios NPI-Q codificados como presencia/ausencia y severidad 0-3.</li>
+          </ul>
+        </div>
+        <div class="mini-card">
+          <h3>Análisis estadístico</h3>
+          <ul>
+            <li>Descriptivos comparativos EA vs DFT.</li>
+            <li>Regresión logística multivariable con DFT como outcome.</li>
+            <li>OR ajustados, IC95%, p-value y AUC aparente del modelo.</li>
+          </ul>
+        </div>
+      </div>
+      <div class="discussion">
+        <h3>Resumen de hallazgos</h3>
+        <p>En este estudio transversal de 609 pacientes con EA o DFT atendidos en una clínica de memoria, se compararon dominios NPI-Q y variables clínicas para diferenciar DFT de EA; los hallazgos principales fueron: (1) DFT presentó edad de inicio más temprana y mayor NPI-Q total; (2) apatía, trastorno motor, irritabilidad, sueño, apetito y desinhibición fueron más prevalentes en DFT; (3) trastorno motor y severidad de apatía fueron los predictores NPI-Q más consistentes en los modelos ajustados; y (4) el modelo core alcanzó AUC aparente de 0.782.</p>
+      </div>
+    </div>
+    <figure class="visual">
+      <img src="assets/paper1_npi_prevalence.png" alt="Diferencias de prevalencia NPI-Q entre DFT y EA">
+      <figcaption>Dominios NPI-Q con mayor diferencia de prevalencia entre DFT y EA.</figcaption>
+    </figure>
+  </section>
+
+  <section id="paper2" class="window">
+    <div class="copy">
+      <div class="meta-row">
+        <span class="number">2</span>
+        <span class="status">propuesta</span>
+      </div>
+      <h2>Perfiles latentes transdiagnósticos de síntomas neuropsiquiátricos</h2>
+      <p class="question">Pregunta central: si los 12 dominios NPI-Q forman subgrupos clínicos de pacientes que atraviesan el diagnóstico EA/DFT.</p>
+      <div class="grid">
+        <div class="metric"><b>3</b><span>clases recomendadas por BIC, entropía y tamaño mínimo</span></div>
+        <div class="metric"><b>0.785</b><span>entropía de la solución final</span></div>
+        <div class="metric"><b>589</b><span>casos completos para indicadores NPI-Q</span></div>
+      </div>
+      <div class="finding">La solución separó tres perfiles: bajo síntoma, afectivo-irritable y alta carga global; las clases se asociaron con diagnóstico, CDR, PFAQ, NPI total, cognición y afecto.</div>
+      <div class="brief-block">
+        <div class="mini-card">
+          <h3>N y muestra</h3>
+          <ul>
+            <li>N analítico: 609 pacientes; EA=466 y DFT=143.</li>
+            <li>N usado en LCA: 589 casos completos para los 12 dominios NPI-Q.</li>
+            <li>Diagnóstico y escalas clínicas se usaron solo para validación externa.</li>
+          </ul>
+        </div>
+        <div class="mini-card">
+          <h3>Análisis estadístico</h3>
+          <ul>
+            <li>LCA categórica con NPI-Q dicotomizado como ausencia/presencia.</li>
+            <li>Comparación de 1 a 6 clases con BIC, SABIC, entropía y tamaño de clase.</li>
+            <li>Validación externa con chi-cuadrado, Kruskal-Wallis y regresión multinomial exploratoria.</li>
+          </ul>
+        </div>
+      </div>
+      <div class="discussion">
+        <h3>Resumen de hallazgos</h3>
+        <p>En este estudio transversal de 589 pacientes con EA o DFT y datos completos de NPI-Q, se realizó un análisis de clases latentes para identificar perfiles neuropsiquiátricos transdiagnósticos; los hallazgos principales fueron: (1) la solución recomendada fue de tres clases; (2) los perfiles se caracterizaron como bajo síntoma, afectivo-irritable y alta carga global; (3) las clases difirieron por diagnóstico, CDR, PFAQ, NPI total, cognición y escalas afectivas; y (4) DFT estuvo más representada en las clases sintomáticas que en la clase de bajo síntoma.</p>
+      </div>
+    </div>
+    <figure class="visual">
+      <img src="assets/paper2_lca_profiles.png" alt="Perfiles latentes NPI-Q">
+      <figcaption>Probabilidad de presencia de cada dominio NPI-Q por clase latente.</figcaption>
+    </figure>
+  </section>
+
+  <section id="paper3" class="window">
+    <div class="copy">
+      <div class="meta-row">
+        <span class="number">3</span>
+        <span class="status">propuesta</span>
+      </div>
+      <h2>Modelo breve de triaje clínico para sospecha de DFT</h2>
+      <p class="question">Pregunta central: si variables rutinarias pueden estimar probabilidad de DFT frente a EA con rendimiento útil para triaje, no para diagnóstico automático.</p>
+      <div class="grid">
+        <div class="metric"><b>0.776</b><span>AUC media del modelo Core elastic net</span></div>
+        <div class="metric"><b>0.760</b><span>AUC del modelo Brief, candidato para screening rápido</span></div>
+        <div class="metric"><b>0.820</b><span>AUC con missing flags; sensibilidad, no modelo principal</span></div>
+      </div>
+      <div class="finding">El modelo Core logró discriminación moderada con imputación dentro de validación cruzada; el modelo Brief tuvo rendimiento cercano y mejor potencial clínico por simplicidad.</div>
+      <div class="brief-block">
+        <div class="mini-card">
+          <h3>N y muestra</h3>
+          <ul>
+            <li>N total: 609 pacientes; EA=466 y DFT=143.</li>
+            <li>Core complete-case antes de imputación: 551/609.</li>
+            <li>Brief complete-case: 578/609; Expanded complete-case: 134/609.</li>
+          </ul>
+        </div>
+        <div class="mini-card">
+          <h3>Análisis estadístico</h3>
+          <ul>
+            <li>Outcome binario: DFT=1, EA=0.</li>
+            <li>Validación cruzada estratificada 5-fold repetida 10 veces.</li>
+            <li>Imputación dentro de cada fold; elastic net principal y RF/XGBoost como benchmarks.</li>
+          </ul>
+        </div>
+      </div>
+      <div class="discussion">
+        <h3>Resumen de hallazgos</h3>
+        <p>En este estudio de desarrollo y validación interna de 609 pacientes con EA o DFT, se entrenaron modelos de triaje clínico para estimar probabilidad de DFT usando variables rutinarias; los hallazgos principales fueron: (1) el modelo Core elastic net alcanzó AUC media de 0.776; (2) el modelo Brief alcanzó AUC de 0.760 con menor número de variables; (3) los modelos Expanded mejoraron la discriminación pero tuvieron alto missing diferencial; y (4) el modelo principal conserva mejor balance entre rendimiento, interpretabilidad y aplicabilidad clínica.</p>
+      </div>
+    </div>
+    <figure class="visual">
+      <img src="assets/paper3_ml_roc.png" alt="Curvas ROC de modelos de triaje DFT vs EA">
+      <figcaption>Comparación de desempeño discriminativo por set de variables y algoritmo.</figcaption>
+    </figure>
+  </section>
+
+  <section id="paper4" class="window">
+    <div class="copy">
+      <div class="meta-row">
+        <span class="number">4</span>
+        <span class="status">propuesta</span>
+      </div>
+      <h2>Estructura del NPI-Q: EGA, CFA y validación clínica</h2>
+      <p class="question">Pregunta central: qué dimensiones empíricas del NPI-Q emergen en EA/DFT y si esa estructura se sostiene frente a modelos factoriales alternativos.</p>
+      <div class="grid">
+        <div class="metric"><b>3</b><span>comunidades globales: psicótico-perceptual, descontrol, afectivo-regulatorio</span></div>
+        <div class="metric"><b>0.976</b><span>CFI del modelo CFA derivado de EGA</span></div>
+        <div class="metric"><b>0.046</b><span>RMSEA del modelo EGA global</span></div>
+      </div>
+      <div class="finding">La estructura global de tres comunidades mostró buen ajuste CFA, invariancia diagnóstica aceptable y validación externa con PFAQ, CDR y cognición.</div>
+      <div class="brief-block">
+        <div class="mini-card">
+          <h3>N y muestra</h3>
+          <ul>
+            <li>N analítico: 609 pacientes; EA=466 y DFT=143.</li>
+            <li>N usado para EGA/CFA NPI-Q: 589 casos completos.</li>
+            <li>Comparación por diagnóstico: EA=453 y DFT=136 con NPI-Q completo.</li>
+          </ul>
+        </div>
+        <div class="mini-card">
+          <h3>Análisis estadístico</h3>
+          <ul>
+            <li>EGA con correlaciones policóricas/auto, GLASSO y Walktrap.</li>
+            <li>CFA ordinal WLSMV comparando modelos EGA, clínicos, literatura y RDoC exploratorio.</li>
+            <li>Bootstrap EGA, invariancia por diagnóstico, confiabilidad y validación externa.</li>
+          </ul>
+        </div>
+      </div>
+      <div class="discussion">
+        <h3>Resumen de hallazgos</h3>
+        <p>En este estudio psicométrico transversal de 589 pacientes con EA o DFT y NPI-Q completo, se evaluó la estructura del NPI-Q mediante EGA, CFA ordinal y validación externa; los hallazgos principales fueron: (1) emergieron tres comunidades globales: psicótico-perceptual, descontrol conductual y afectivo-apático-regulatoria; (2) el modelo CFA derivado de EGA mostró excelente ajuste; (3) la invariancia por diagnóstico fue aceptable; y (4) las comunidades se asociaron con funcionalidad, severidad global y cognición.</p>
+      </div>
+    </div>
+    <figure class="visual">
+      <img src="assets/paper4_ega_network.png" alt="Red EGA global del NPI-Q">
+      <figcaption>Comunidades NPI-Q derivadas por EGA global y usadas luego como base del paper de network.</figcaption>
+    </figure>
+  </section>
+
+  <section id="paper5" class="window">
+    <div class="copy">
+      <div class="meta-row">
+        <span class="number">5</span>
+        <span class="status">propuesta</span>
+      </div>
+      <h2>Red de síntomas, afecto y funcionalidad usando comunidades EGA</h2>
+      <p class="question">Pregunta central: qué síntomas conectan las dimensiones NPI-Q con afecto externo, severidad y discapacidad funcional.</p>
+      <div class="grid">
+        <div class="metric"><b>315</b><span>casos completos con NPI-Q, PFAQ, CDR, GAD-7 y GDS</span></div>
+        <div class="metric"><b>0.758</b><span>bridge expected influence de alucinaciones</span></div>
+        <div class="metric"><b>0.746</b><span>bridge expected influence de trastorno motor</span></div>
+      </div>
+      <div class="finding">Alucinaciones, trastorno motor, agitación, PFAQ, apatía y ansiedad NPI-Q emergieron como conectores entre comunidades clínicas; no hubo diferencias globales significativas de red entre EA y DFT.</div>
+      <div class="brief-block">
+        <div class="mini-card">
+          <h3>N y muestra</h3>
+          <ul>
+            <li>N principal complete-case: 315 pacientes; EA=193 y DFT=122.</li>
+            <li>Nodos principales: 12 NPI-Q, PFAQ, CDR, GAD-7 y GDS.</li>
+            <li>Sensibilidad robusta: 589 casos con NPI-Q, PFAQ y CDR.</li>
+          </ul>
+        </div>
+        <div class="mini-card">
+          <h3>Análisis estadístico</h3>
+          <ul>
+            <li>Red EBICglasso con correlaciones polychoric-auto y gamma=0.50.</li>
+            <li>Bridge centrality con comunidades EGA del NPI-Q más dominios externos.</li>
+            <li>Bootstrap de estabilidad, sensibilidad y Network Comparison Test EA vs DFT.</li>
+          </ul>
+        </div>
+      </div>
+      <div class="discussion">
+        <h3>Resumen de hallazgos</h3>
+        <p>En este estudio transversal de red de 315 pacientes con EA o DFT y datos completos de NPI-Q, PFAQ, CDR, GAD-7 y GDS, se estimó una red de síntomas para identificar nodos centrales y puente entre dominios clínicos; los hallazgos principales fueron: (1) las asociaciones más fuertes fueron GAD-7-GDS, PFAQ-CDR, delirios-alucinaciones, desinhibición-irritabilidad y euforia-desinhibición; (2) alucinaciones, trastorno motor, agitación, PFAQ, apatía y ansiedad NPI-Q fueron los principales nodos puente; (3) la sensibilidad con 589 pacientes preservó los principales enlaces clínicos; y (4) la comparación exploratoria EA vs DFT no mostró diferencias globales significativas de estructura ni fuerza de red.</p>
+      </div>
+    </div>
+    <figure class="visual">
+      <img src="assets/paper5_bridge.png" alt="Bridge centrality usando comunidades EGA">
+      <figcaption>Nodos puente entre comunidades EGA del NPI-Q, funcionalidad/severidad y escalas afectivas.</figcaption>
+    </figure>
+  </section>
+</main>
+
+<script>
+const tabs = document.querySelectorAll(".tab");
+const panels = document.querySelectorAll(".window");
+tabs.forEach((tab) => {
+  tab.addEventListener("click", () => {
+    tabs.forEach((t) => t.classList.remove("active"));
+    panels.forEach((p) => p.classList.remove("active"));
+    tab.classList.add("active");
+    document.getElementById(tab.dataset.target).classList.add("active");
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  });
+});
+</script>
+</body>
+</html>
